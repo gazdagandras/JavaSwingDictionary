@@ -20,10 +20,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MainForm extends javax.swing.JFrame {
 
+    //              protocol://server/database
     String dbUrl = "jdbc:mysql://localhost/java_dictionary";
     String dbUser = "root";
     String dbPass = "";
-    
+
     /**
      * Creates new form MainForm
      */
@@ -31,7 +32,6 @@ public class MainForm extends javax.swing.JFrame {
         initComponents();
         
         loadDictionary();
-        
     }
 
     private void loadDictionary() {
@@ -40,27 +40,23 @@ public class MainForm extends javax.swing.JFrame {
             Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
             Statement stmt = con.createStatement();
             
-            ResultSet rs = stmt.executeQuery("SELECT * FROM words");
-            
-            // Empty table:
+            // empty table:
             ((DefaultTableModel)tblWords.getModel()).setRowCount(0);
             
+            ResultSet rs = stmt.executeQuery("SELECT * FROM words");
             while (rs.next()) {
-                // Add a row to the table:
                 ((DefaultTableModel)tblWords.getModel()).addRow(new Object[] {
                     rs.getString("eng"),
                     rs.getString("hun")
                 });
-                
             }
             
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
