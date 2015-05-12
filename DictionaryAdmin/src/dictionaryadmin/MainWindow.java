@@ -44,7 +44,6 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void loadDictionary() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
             Statement stmt = con.createStatement();
 
@@ -59,7 +58,7 @@ public class MainWindow extends javax.swing.JFrame {
                 });
             }
 
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -336,7 +335,6 @@ public class MainWindow extends javax.swing.JFrame {
             String name = tfLoginName.getText();
             String password = pfLoginPassword.getText();
 
-            Class.forName("com.mysql.jdbc.Driver");
             Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPass);
             Statement stmt = con.createStatement();
 
@@ -356,8 +354,6 @@ public class MainWindow extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Login error!", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(MainWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
